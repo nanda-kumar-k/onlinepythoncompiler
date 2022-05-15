@@ -1,0 +1,134 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Compiler</title>
+    <link rel="stylesheet"  href="{{ url_for('static', filename = 'index.css') }}">
+</head>
+<body>
+    <div class="navbar-container">
+
+    </div>
+    <div class="container">
+        <div class="code-option-container">
+            <div class="code-options">
+                <button onclick="codeoptions('editer')">Editer</button>
+                <button onclick="codeoptions('upload')">Upload</button>
+                <button>light</button>
+                <button>dark</button>
+            </div>
+            <div class="code">
+                <div class="upload-code-file">
+                    <form id="codefile" action="/codefile" method="post" enctype="multipart/form-data">
+                        
+                        <input type='file' name="file1" title="Choose a video please" id="aa" onchange="pressed()" hidden>
+                        <label for="aa" id="fileLabel">Choose file</label> <br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                <div class="code-container">
+                        <form  method="post" id="codetext" action="/codetext" enctype="multipart/form-data">
+                            
+                            <textarea name="code1" id="code" ></textarea>
+                        </form>
+                </div>
+            </div>
+            <div class="code-submit-container">
+                <button onclick="submitcode()">Submit</button>
+            </div>
+        </div>
+       
+        <div class="output-container">
+            <div class="output-options">
+                <button onclick="inputoption('upload')">Upload</button>
+                <button onclick="inputoption('output')">Output</button>
+                <button onclick="inputoption('enterinput')">Enter input</button>
+            </div>
+            <div class="output">
+                <div class="upload-input-file">
+                    <form id="inputfile" action="/inputfile" method="post" enctype="multipart/form-data">
+                        
+                        <input type="file" name="file2" id="files" class="hidden"/>
+                        <label for="files">Select file</label> <br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                <div class="take-input">
+                    <form id="inputtext" action="inputtext" method="post" enctype="multipart/form-data">
+                        
+                        <textarea name="code2" id="code" ></textarea>
+                        <input type="submit" value="Submit" id="submit">
+                    </form>
+                </div>
+                <div class="display-output">
+
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    <script>
+        var textareas = document.getElementsByTagName('textarea');
+        var count = textareas.length;
+        for(var i=0;i<count;i++){
+            textareas[i].onkeydown = function(e){
+                if(e.keyCode==9 || e.which==9){
+                    e.preventDefault();
+                    var s = this.selectionStart;
+                    this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+                    this.selectionEnd = s+1; 
+                }
+            }
+        }
+        window.pressed = function(){
+            var a = document.getElementById('aa');
+            if(a.value == "")
+            {
+                fileLabel.innerHTML = "Choose file";
+            }
+            else
+            {
+                var theSplit = a.value.split('\\');
+                fileLabel.innerHTML = theSplit[theSplit.length-1];
+            }
+        };
+
+        function codeoptions(opt){
+            if (opt == "editer"){
+                document.getElementsByClassName("code-container")[0].style.display = "block";
+                document.getElementsByClassName("upload-code-file")[0].style.display = "none";
+            }
+            else if (opt == "upload"){
+                document.getElementsByClassName("code-container")[0].style.display = "none";
+                document.getElementsByClassName("upload-code-file")[0].style.display = "block";
+            }
+        }
+
+        function inputoption(opt){
+            if (opt == "upload"){
+                document.getElementsByClassName("upload-input-file")[0].style.display = "block";
+                document.getElementsByClassName("take-input")[0].style.display = "none";
+                document.getElementsByClassName("display-output")[0].style.display = "none";
+            }
+            else if (opt == "output"){
+                document.getElementsByClassName("upload-input-file")[0].style.display = "none";
+                document.getElementsByClassName("take-input")[0].style.display = "none";
+                document.getElementsByClassName("display-output")[0].style.display = "block";
+            }
+            else if (opt == "enterinput"){
+                document.getElementsByClassName("upload-input-file")[0].style.display = "none";
+                document.getElementsByClassName("take-input")[0].style.display = "block";
+                document.getElementsByClassName("display-output")[0].style.display = "none";
+            }
+        }
+
+        function submitcode(){
+            // document.getElementById("codefile").submit();
+            document.getElementById("codetext").submit();
+            // document.getElementById("inputfile").submit();
+            // document.getElementById("inputtext").submit();
+        }
+    </script>
+
+</body>
+</html>

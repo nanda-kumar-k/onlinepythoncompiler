@@ -1,0 +1,116 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body {
+    /* background: black; */
+    width: 100%;
+    height: 100%;
+}
+.navbar-container {
+    width: 100%;
+    height: 7vh;
+    background: #2f64ea;
+}
+.container {
+    width: 70%;
+    padding: 0 15%;
+    background-color: red;
+}
+.code-option-container {
+    width: 100%;
+    height: 55vh;
+    background: yellow;
+    display: flex;
+    flex-direction: column;
+}
+.code-options {
+    width: 100%;
+    height: 5vh;
+    background: green;
+}
+.code {
+    width: 100%;
+    height: 45vh;
+    display: block;
+    position: 'relative';
+    background: blue;
+    z-index: 1;
+}
+.code .upload-code-file {
+    position: absolute;
+    width: 70%;
+    height: 45vh;
+    display: none;
+    background-color: orange;
+}
+.code .code-container {
+    position: absolute;
+    width: 70%;
+    height: 45vh;
+    display: block;
+    background-color: black;
+}
+.code .code-container textarea{
+    width: 100%;
+    height: 45vh;
+    overflow:scroll;
+    text-align:left;
+    padding: none;
+    font-size: 20px;
+    tab-size: 4;
+}
+.code-submit-container {
+    width: 100%;
+    height: 5vh;
+    background: green;
+}
+.output-container {
+    margin-top: 5px;
+    width: 100%;
+    height: 37vh;
+    background: violet;
+}
+.output-options {
+    width: 100%;
+    height: 5vh;
+    background: green;
+}
+.output {
+    width: 100%;
+    height: 32vh;
+    display: block;
+    position: 'relative';
+    background: pink;
+    z-index: 1;
+}
+.upload-input-file {
+    position: absolute;
+    width: 70%;
+    height: 32vh;
+    display: none;
+    background-color: orange;
+}
+.take-input{
+    position: absolute;
+    width: 70%;
+    height: 32vh;
+    display: none;
+    background-color: black;
+}
+.take-input textarea{
+    width: 100%;
+    height: 32vh;
+    overflow:scroll;
+    text-align:left;
+    padding: none;
+    font-size: 20px;
+    tab-size: 4;
+}
+.display-output{
+    position: absolute;
+    width: 70%;
+    height: 32vh;
+    display: block;
+    background-color: rgb(184, 98, 98);
+}
