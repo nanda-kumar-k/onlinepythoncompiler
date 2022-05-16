@@ -23,6 +23,7 @@ def compile_script():
     print("workingggggggggggggggggggggggggggggggggggggggggggggggggggggg")
     # print(op)
     # print("workingggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+    return
 
 
 
@@ -30,10 +31,13 @@ def compile_code():
     command = f'python code.py'
     inputfile = open("input.txt", "r")
     input = " ".join(inputfile.readlines())
-    input = input.encode()
-    print(input)
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE ,stderr=subprocess.PIPE, shell=True)
-    output, error = process.communicate()
+    if input:
+        lines = input.encode()
+        print(input)
+        output, error = process.communicate(input=lines)
+    else:
+        output, error = process.communicate()
     print(output)
     print(error)
     with open("output_file.txt","w") as opf:

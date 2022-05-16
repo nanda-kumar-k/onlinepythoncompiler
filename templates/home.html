@@ -10,46 +10,97 @@
 </head>
 <body>
     <div class="navbar-container">
-        <i class="far fa-moon" style="background:SkyBlue;color:red"></i>
+        <!-- <i class="far fa-moon" style="background:SkyBlue;color:red"></i> -->
     </div>
     <div class="container">
         <form  id="codefile" action="" method="post" enctype="multipart/form-data">
             <div class="code-option-container">
                 <div class="code-options">
-                    <p onclick="codeoptions('upload')">nandu</p>
-                    <button onclick="codeoptions('editer')">Editer</button>
-                    <button onclick="codeoptions('upload')">Upload</button>
-                    <button>light</button>
-                    <button>dark</button>
+                    <div class="py-button" onclick="codeoptions('editer')">
+                        <i class="fas fa-code" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" onclick="codeoptions('upload')">
+                        <i class="far fa-folder-open" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" id="py-button-left" >
+                        <i class="far fa-sun" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" id="py-button-left" style="margin-right: 50px;">
+                        <i class="fas fa-moon" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" id="py-button-left" style="margin-right: 100px;width: 50px;">
+                        <i class="fas fa-font" style="font-size: 20px;margin-right: 5px;"></i>
+                        <select style="outline: none;">
+                            <option>10</option>
+                            <option>20</option>
+                            <option>30</option>
+                            <option>40</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="code">
                     <div class="upload-code-file">
-                        <textarea name="code" id="code1" rows="10" cols="80"></textarea>
+                        <input type='file' name="file1"  id="aa" onchange="pressed()" hidden>
+                        <label for="aa" id="fileLabel">Choose file</label>
+                        
+                        <br>
+                        <div class="py-button" onclick="submitcodefile()" style="width: 50px;">
+                            <i class="fab fa-centercode" style="font-size: 20px;"></i>
+                            <p style="margin-left: 5px;font-size: 20px;">Run</p>
+                        </div>
                     </div>
                     <div class="code-container">
-                        <textarea name="code1" id="output" rows="10" cols="80"></textarea>
+                        {% for k, v in data.items() %} 
+                            {% if k == "code" %}
+                                <textarea name="codetext">{% for i in v %}{{ i }}{% endfor %}</textarea>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="code-submit-container">
-                    
-                    <p onclick="submitcode()">submit</p>
+                    <div class="py-button" onclick="submitcode()" style="width: 50px;">
+                        <i class="fab fa-centercode" style="font-size: 20px;"></i>
+                        <p style="margin-left: 5px;font-size: 20px;">Run</p>
+                    </div>
                 </div>
             </div>
                 <div class="output-container">
                     <div class="output-options">
-                        <button onclick="inputoption('upload')">Upload</button>
-                        <button onclick="inputoption('output')">Output</button>
-                        <button onclick="inputoption('enterinput')">Enter input</button>
+                        <div class="py-button" onclick="inputoption('output')">
+                            <i class="fas fa-terminal" style="font-size: 20px;"></i>
+                        </div>
+                        <div class="py-button" onclick="inputoption('enterinput')">
+                            <i class="far fa-keyboard" style="font-size: 20px;"></i>
+                        </div>
+                        <div class="py-button" onclick="inputoption('upload')">
+                            <i class="far fa-folder-open" style="font-size: 20px;"></i>
+                        </div>
                     </div>
                     <div class="output">
                         <div class="upload-input-file">
-                            <textarea name="code" id="output" rows="10" cols="80"></textarea>
+                            <input type='file' name="file2" id="outpressed" onchange="outpressedfun()" hidden>
+                            <label for="outpressed" id="fileLabe2" >Choose file</label>
+                            <br>
+                            <div class="py-button" onclick="submitinputfile()" style="width: 50px;">
+                                <i class="fab fa-centercode" style="font-size: 20px;"></i>
+                                <p style="margin-left: 5px;font-size: 20px;">Run</p>
+                            </div>
                         </div>
                         <div class="take-input">
-                            <textarea name="code2" id="output" rows="10" cols="80"></textarea>
+                            {% for k, v in data.items() %} 
+                                {% if k == "input" %} 
+                                <textarea name="inputtext">{% for i in v %}{{ i }}{% endfor %}</textarea>  
+                                {% endif %}
+                            {% endfor %}
                         </div>
                         <div class="display-output">
-        
+                            {% for k, v in data.items() %} 
+                                {% if k == "output" %}
+                                {% for i in v %}
+                                    <p>{{ i }}</p>
+                                {% endfor %}
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div> 
                 </div>
@@ -82,6 +133,19 @@
             }
         };
 
+        window.outpressedfun = function(){
+            var a = document.getElementById('outpressed');
+            if(a.value == "")
+            {
+                fileLabe2.innerHTML = "Choose file";
+            }
+            else
+            {
+                var theSplit = a.value.split('\\');
+                fileLabe2.innerHTML = theSplit[theSplit.length-1];
+            }
+        };
+
         function codeoptions(opt){
             if (opt == "editer"){
                 document.getElementsByClassName("code-container")[0].style.display = "block";
@@ -111,11 +175,19 @@
             }
         }
         function submitcode(){
-            document.getElementById("codefile").action = "/codetext";
+            document.getElementById("codefile").action = "/compile";
             // document.getElementById("codefile").submit();
             document.getElementById("codefile").submit();
             // document.getElementById("inputfile").submit();
             // document.getElementById("inputtext").submit();
+        }
+        function submitcodefile(){
+            document.getElementById("codefile").action = "/uploadfile/code";
+            document.getElementById("codefile").submit();
+        }
+        function submitinputfile(){
+            document.getElementById("codefile").action = "/uploadfile/input";
+            document.getElementById("codefile").submit();
         }
     </script>
 </body>

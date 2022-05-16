@@ -27,6 +27,9 @@ body {
 .code-options {
     width: 100%;
     height: 5vh;
+    display: flex;
+    position: relative;
+    align-items: center;
     background: green;
 }
 .code {
@@ -63,6 +66,8 @@ body {
 .code-submit-container {
     width: 100%;
     height: 5vh;
+    display: flex;
+    align-items: center;
     background: green;
 }
 .output-container {
@@ -70,11 +75,16 @@ body {
     width: 100%;
     height: 37vh;
     background: violet;
+    display: flex;
+    flex-direction: column;
 }
 .output-options {
     width: 100%;
     height: 5vh;
     background: green;
+    display: flex;
+    position: relative;
+    align-items: center;
 }
 .output {
     width: 100%;
@@ -113,4 +123,24 @@ body {
     height: 32vh;
     display: block;
     background-color: rgb(184, 98, 98);
+}
+.py-button {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    /* background-color: lawngreen; */
+    margin: 0 10px;
+}
+#py-button-left{
+    position: absolute;
+    /* background-color: #2f64ea; */
+    right: 0;
+}
+select {
+    outline: none;
+    border: none;
 }
