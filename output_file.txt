@@ -1,4 +1,2 @@
-Unsorted list is,
-[39, 12, 18, 85, 72, 10, 2, 18]
-Sorted Array is, 
-[2, 10, 12, 18, 18, 39, 72, 85]
+cyclic rendundancy check
+[0, 0, 1, 0]

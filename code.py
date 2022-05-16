@@ -1,13 +1,30 @@
-def bubblesort(elements):
-  # Looping from size of array from last index[-1] to index [0]
-  for n in range(len(elements)-1, 0, -1):
-    for i in range(n):
-      if elements[i] > elements[i + 1]:
-        # swapping data if the element is less than next element in the array
-        elements[i], elements[i + 1] = elements[i + 1], elements[i]
-elements = [39,12,18,85,72,10,2,18]
-print("Unsorted list is,") 
-print( elements)
-bubblesort(elements)
-print("Sorted Array is, ")
-print(elements)
+def xor (a,b):
+    if a == b:
+        return 1
+    else:
+        return 0
+def find(lis1, lis2):
+    temp = []
+    for n in range(0,len(lis1)):
+        temp.append(0)
+    for i in reversed (range(0,len(lis1))):
+        t = xor(lis1[i],lis2[i])
+        if t == 1 and i == len(lis1)-1:
+            tp = []
+            for k in range(0,len(lis1)):
+                tp.append(0)
+            tp.append(t)
+        else:
+            temp[i] = t
+    return temp
+def divide(list):
+    temp = list[0]
+    for i  in list:
+        t = find(temp,i)
+        temp = t
+    return temp
+if __name__ == "__main__":
+    print("cyclic rendundancy check")
+    t = [[0,1,0,1],[1,0,1,1],[0,1,1,1]]
+    res = divide(t)
+    print(res)

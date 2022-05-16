@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, url_for, request
+from flask import Flask, redirect, render_template, request_finished, url_for, request
 from flask import Flask
 from compiler import compile_script
 app = Flask(__name__)
@@ -14,8 +14,8 @@ def index():
         inputfile.truncate()
         input = inputfile.readlines()
     data ={
-            "code":code,
-            "input":input
+            "code":"# Write your code here.",
+            "input":"# Write your input here."
         }   
     return render_template('home.html', data=data)
 
@@ -23,7 +23,14 @@ def index():
 @app.route('/uploadfile/<filetype>',methods = ['POST'])
 def UploadFile(filetype):
     if request.method == 'POST':
+        sp = request.files['file1'].filename.split('.')
+        print(sp)
         if filetype == 'code':
+            sp = request.files['file1'].filename.split('.')
+            sp = sp[-1]
+            print(sp)
+            if sp != 'py' and sp != 'txt':
+                return "Please upload a python file"
             file = request.files['file1'].read()
             file= file.decode('utf-8')
             with open("temp.txt","w") as tem:
@@ -32,8 +39,11 @@ def UploadFile(filetype):
                 for line in inp:
                     if len(line.strip()) > 0:
                         wcode.write(line) 
-            print(file)
         elif filetype == 'input':
+            sp = request.files['file2'].filename.split('.')
+            sp = sp[-1]
+            if sp != 'py' and sp != 'txt':
+                return "Please upload a python file"
             file = request.files['file2'].read()
             file = file.decode('utf-8')
             with open("temp.txt","w") as tem:
@@ -42,7 +52,6 @@ def UploadFile(filetype):
                 for line in inp:
                     if len(line.strip()) > 0:
                         winput.write(line) 
-            print(file)
         with open("code.txt","r") as codeinputfile:
                 code = codeinputfile.readlines()
         with open("input.txt","r") as inputfile:
@@ -80,25 +89,12 @@ def CodeCompile():
         compile_script()
         with open("output.txt","r") as outfile:
                 output = outfile.readlines() 
-        print(type(output))   
-        print(output)
         data ={
             "code":code,
             "input":input,
             "output":output
         }
     return render_template('home.html', data=data)
-
-
-
-@app.route('/inputtext',methods = ['POST'])
-def InputText():
-    if request.method == 'POST':
-        code = request.form['code2']
-        with open("input.txt","w") as rnr: 
-            rnr.write(code.decode('utf-8'))
-        print(code)
-    return render_template('index.html')
 
 
 
