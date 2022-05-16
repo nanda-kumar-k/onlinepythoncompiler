@@ -28,11 +28,14 @@ def compile_script():
 
 def compile_code():
     command = f'python code.py'
-    # inputfile = open("input.txt", "r")
-    # input = " ".join(inputfile.readlines())
-    # input = input.encode()
-    process = subprocess.Popen(command, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
+    inputfile = open("input.txt", "r")
+    input = " ".join(inputfile.readlines())
+    input = input.encode()
+    print(input)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE ,stderr=subprocess.PIPE, shell=True)
     output, error = process.communicate()
+    print(output)
+    print(error)
     with open("output_file.txt","w") as opf:
         opf.write(output.decode('utf-8'))
         opf.write(error.decode('utf-8'))
@@ -43,3 +46,4 @@ def remove_esc(s):
     translator = str.maketrans('','',escapes)
     s = s.translate(translator)
     return s
+

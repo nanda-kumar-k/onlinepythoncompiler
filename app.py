@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-   return render_template('index.html')
+   return render_template('home.html')
 
 @app.route('/codefile',methods = ['POST'])
 def CodeFile():
@@ -30,10 +30,12 @@ def InputFile():
 def CodeText():
     if request.method == 'POST':
         code = request.form['code1']
-        with open("code.txt","w") as rnr: 
-            rnr.write(code.decode('utf-8'))
+        code2 = request.form['code2']
+        # with open("code.txt","w") as rnr: 
+        #     rnr.write(code.decode('utf-8'))
         print(code)
-    return render_template('index.html')
+        print(code2)
+    return render_template('home.html')
 
 @app.route('/inputtext',methods = ['POST'])
 def InputText():
