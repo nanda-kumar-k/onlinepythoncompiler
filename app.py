@@ -1,8 +1,8 @@
-from flask import Flask, redirect, render_template, request_finished, url_for, request
+from flask import Flask, render_template,request, flash
 from flask import Flask
 from compiler import compile_script
 app = Flask(__name__)
-
+app.secret_key = 'nanda kumar'
 @app.route('/')
 def index():
     with open("code.txt","r+") as codeinputfile:
@@ -17,8 +17,19 @@ def index():
             "code":"# Write your code here.",
             "input":"# Write your input here."
         }   
-    return render_template('home.html', data=data)
+    return render_template('index.html', data=data)
 
+
+def FindData():
+    with open("code.txt","r") as codeinputfile:
+                code = codeinputfile.readlines()
+    with open("input.txt","r") as inputfile:
+            input = inputfile.readlines()   
+    data ={
+        "code":code,
+        "input":input
+    }
+    return data
 
 @app.route('/uploadfile/<filetype>',methods = ['POST'])
 def UploadFile(filetype):
@@ -30,7 +41,9 @@ def UploadFile(filetype):
             sp = sp[-1]
             print(sp)
             if sp != 'py' and sp != 'txt':
-                return "Please upload a python file"
+                flash('Only .py and .txt files are allowed', 'error')
+                data = FindData()
+                return render_template('index.html' , data=data)
             file = request.files['file1'].read()
             file= file.decode('utf-8')
             with open("temp.txt","w") as tem:
@@ -43,7 +56,9 @@ def UploadFile(filetype):
             sp = request.files['file2'].filename.split('.')
             sp = sp[-1]
             if sp != 'py' and sp != 'txt':
-                return "Please upload a python file"
+                flash('Only .py and .txt files are allowed')
+                data = FindData()
+                return render_template('index.html' , data=data)
             file = request.files['file2'].read()
             file = file.decode('utf-8')
             with open("temp.txt","w") as tem:
@@ -52,15 +67,9 @@ def UploadFile(filetype):
                 for line in inp:
                     if len(line.strip()) > 0:
                         winput.write(line) 
-        with open("code.txt","r") as codeinputfile:
-                code = codeinputfile.readlines()
-        with open("input.txt","r") as inputfile:
-                input = inputfile.readlines()   
-        data ={
-            "code":code,
-            "input":input
-        }
-    return render_template('home.html', data=data)
+        data = FindData()
+        flash('Your file has been submitted', 'success')
+    return render_template('index.html', data=data)
 
 
 
@@ -94,7 +103,7 @@ def CodeCompile():
             "input":input,
             "output":output
         }
-    return render_template('home.html', data=data)
+    return render_template('index.html', data=data)
 
 
 

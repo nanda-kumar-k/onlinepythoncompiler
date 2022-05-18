@@ -2,133 +2,264 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Compiler</title>
+    <link rel="icon" href="{{ url_for('static', filename = 'pylogolight.png') }}" type="image/x-icon" />
+    <title>Online Python Compiler</title>
     <link rel="stylesheet"  href="{{ url_for('static', filename = 'index.css') }}">
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        rel="stylesheet"/>
 </head>
 <body>
     <div class="navbar-container">
-
+        <img src="{{ url_for('static', filename = 'opclogo.png') }}" alt="PY Logo">
+        <h2>Online Python Compiler</h2>
     </div>
     <div class="container">
-        <div class="code-option-container">
-            <div class="code-options">
-                <button onclick="codeoptions('editer')">Editer</button>
-                <button onclick="codeoptions('upload')">Upload</button>
-                <button>light</button>
-                <button>dark</button>
-            </div>
-            <div class="code">
-                <div class="upload-code-file">
-                    <form id="codefile" action="/codefile" method="post" enctype="multipart/form-data">
-                        
-                        <input type='file' name="file1" title="Choose a video please" id="aa" onchange="pressed()" hidden>
-                        <label for="aa" id="fileLabel">Choose file</label> <br>
-                        <button type="submit">Submit</button>
-                    </form>
+        <form  id="codefile" action="" method="post" enctype="multipart/form-data">
+            <div class="code-option-container">
+                <div class="code-options" id="mode1">
+                    <div class="py-button" onclick="codeoptions('editer')">
+                        <i class="fas fa-code" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" onclick="codeoptions('upload')">
+                        <i class="far fa-folder-open" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" id="py-button-left" onclick="screenlight()">
+                        <i class="far fa-sun" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" id="py-button-left" onclick="screendark()"  style="margin-right: 50px;">
+                        <i class="fas fa-moon" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="py-button" id="py-button-left" style="margin-right: 100px;width: 50px;">
+                        <i class="fas fa-font" style="font-size: 20px;margin-right: 5px;"></i>
+                        <select id="select1" onchange="fontsize()">
+                            <option value="14">14</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                            <option value="20">20</option>
+                            <option value="22">22</option>
+                            <option value="24">24</option>
+                            <option value="26">26</option>
+                            <option value="28">28</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="code-container">
-                        <form  method="post" id="codetext" action="/codetext" enctype="multipart/form-data">
-                            
-                            <textarea name="code1" id="code" ></textarea>
-                        </form>
+                <div class="code">
+                    <div class="upload-code-file" id="mode2">
+                        <input type='file' name="file1"  id="aa" onchange="pressed()" hidden>
+                        <label for="aa" style="font-size: 20px;">
+                            <i class="far fa-folder-open" style="font-size: 150px;cursor: pointer; color: rgb(80, 78, 78);"></i>
+                        </label>
+                        <h3><label for="aa" id="fileLabel">
+                           Choose File
+                        </label></h3>
+                        <br>
+                        <div class="py-button" onclick="submitcodefile()" id="submit-button" style="width: 100px;">
+                            <i class="fas fa-check-circle" style="font-size: 20px;"></i>
+                            <p style="margin-left: 5px;font-size: 20px;">Upload</p>
+                        </div>
+                    </div>
+                    <div class="code-container" id="mode3">
+                        {% for k, v in data.items() %} 
+                            {% if k == "code" %}
+                                <textarea name="codetext">{% for i in v %}{{ i }}{% endfor %}</textarea>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="code-submit-container" id="mode4">
+                    <div class="py-button" onclick="submitcode()" id="submit-button" style="width: 80px;">
+                        <i class="fab fa-centercode" style="font-size: 20px;"></i>
+                        <p style="margin-left: 5px;font-size: 20px;">Run</p>
+                    </div>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                        {% for category, message in messages %}
+                            {% if category == 'error' %}
+                            <script>
+                                const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                        })
+                                        Toast.fire({
+                                        icon: 'error',
+                                        title: 'Only .py and .txt files are allowed'
+                                        })
+                            </script>
+                             {% else %} 
+                            <script>
+                                const Toast2 = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                        })
+                                        Toast2.fire({
+                                        icon: 'success',
+                                        title: 'Your file has been submitted'
+                                        })
+                            </script>
+                            {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </div>
             </div>
-            <div class="code-submit-container">
-                <button onclick="submitcode()">Submit</button>
-            </div>
-        </div>
-       
-        <div class="output-container">
-            <div class="output-options">
-                <button onclick="inputoption('upload')">Upload</button>
-                <button onclick="inputoption('output')">Output</button>
-                <button onclick="inputoption('enterinput')">Enter input</button>
-            </div>
-            <div class="output">
-                <div class="upload-input-file">
-                    <form id="inputfile" action="/inputfile" method="post" enctype="multipart/form-data">
-                        
-                        <input type="file" name="file2" id="files" class="hidden"/>
-                        <label for="files">Select file</label> <br>
-                        <button type="submit">Submit</button>
-                    </form>
+                <div class="output-container">
+                    <div class="output-options" id="mode5">
+                        <div class="py-button" onclick="inputoption('output')">
+                            <i class="fas fa-terminal" style="font-size: 20px;"></i>
+                        </div>
+                        <div class="py-button" onclick="inputoption('enterinput')">
+                            <i class="far fa-keyboard" style="font-size: 20px;"></i>
+                        </div>
+                        <div class="py-button" onclick="inputoption('upload')">
+                            <i class="far fa-folder-open" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="upload-input-file" id="mode6">
+                            <input type='file' name="file2" id="outpressed" onchange="outpressedfun()" hidden>
+                            <label for="aa" style="font-size: 20px;">
+                                <i class="far fa-folder-open" style="font-size: 75px;cursor: pointer; color: rgb(80, 78, 78);"></i>
+                            </label>
+                            <h3><label for="outpressed" id="fileLabe2">
+                                Choose file
+                            </label></h3>
+                            <br>
+                            <div class="py-button" onclick="submitinputfile()" id="submit-button" style="width: 80px;">
+                                <i class="fas fa-check-circle" style="font-size: 16px;"></i>
+                                <p style="margin-left: 5px;font-size: 16px;">Upload</p>
+                            </div>
+                        </div>
+                        <div class="take-input" id="mode7">
+                            {% for k, v in data.items() %} 
+                                {% if k == "input" %} 
+                                <textarea name="inputtext">{% for i in v %}{{ i }}{% endfor %}</textarea>  
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="display-output" id="mode8">
+                            {% for k, v in data.items() %} 
+                                {% if k == "output" %}
+                                {% for i in v %}
+                                    <p><b>{{ i }}</p></b>
+                                {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div> 
                 </div>
-                <div class="take-input">
-                    <form id="inputtext" action="inputtext" method="post" enctype="multipart/form-data">
-                        
-                        <textarea name="code2" id="code" ></textarea>
-                        <input type="submit" value="Submit" id="submit">
-                    </form>
-                </div>
-                <div class="display-output">
+        </form>
 
+        <div class="about-py">
+            <h1>
+                Online Python Compiler
+            </h1>
+            <br>
+            <p>
+                Build, Run Python Code using Online Python Compiler(opc). It's one of the quick, Powerful Online Compilers for Python Language. Don't worry about setting up Python Environment in your local System. Now Run the Python Code in your favorite brower instantly. Just write the program or upload the program and click the RUN button!!
+            </p>
+            <br>
+            <h1> How to use opc  </h1>
+            <br>
+            <p>
+                <li>If your Program doesn't contain Input's, Just click on code <i class="fas fa-code"></i> icon and write program or click on file <i class="far fa-folder-open"></i> icon, upload your program( only .txt or .py files) and click the RUN <i class="fas fa-check-circle"></i> button!!.</li>
+                <li>if your program contain Input's, Just click on code <i class="fas fa-code"></i> icon and write program or click on file <i class="far fa-folder-open"></i> icon, upload your program( only .txt or .py files) and click on input <i class="far fa-keyboard" ></i> icon, enter the input's or click on file <i class="far fa-folder-open"></i> icon upload your input's file( only .txt or .py files) and click the RUN <i class="fas fa-check-circle"></i> button!!.</li>
+                <li>Output of your program will be display in the terminal <i class="fas fa-terminal"></i>.</li>
+            </p>
+            <br>
+            <h1> About Python </h1>
+            <br>
+            <p>
+                Python is a widely used high-level, general-purpose, interpreted, dynamic programming language. Its design philosophy emphasizes code readability, and its syntax allows programmers to express concepts in fewer lines of code than possible in languages such as C++ or Java. The language provides constructs intended to enable clear programs on both a small and large scale. It provides a convenient general-purpose programming language, with constructs that map to most of the familiar constructs used in other languages.
+            </p>
+            <br>
+            <P> To learn more about Python check out some of the following links. </P>
+            <br>
+            <div class="about-links">
+                <li><a href="https://www.python.org/">Python Official Website</a></li>
+                <li><a href="https://docs.python.org/3/"> Python docs </a></li>
+                <li><a href="https://www.geeksforgeeks.org/python-programming-language/"> GeeksforGeeks </a></li>
+                <li><a href="https://www.tutorialspoint.com/python/"> Tutorials Point </a></li>
+                <li><a href="https://www.w3schools.com/python/"> W3Schools </a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Python_(programming_language)"> wikipedia-python </a></li>
+                <li><a href="https://www.javatpoint.com/python-tutorial"> javatpoint </a></li>
+            </div>
+            <br>
+            <h1> Why Learn Python? </h1>
+            <br>
+            <p>
+                <li>Python is easy to learn. It's syntax is easy and code is very readable.</li>
+                <li>Python is a general-purpose programming language. It has efficient high-level data structures and a simple but effective approach to object-oriented programming.</li>
+                <li>Python is a dynamic programming language. It supports imperative, functional and object-oriented programming styles.</li>
+                <li>Python is a high-level, interpreted, interactive and dynamic programming language.</li>
+                <li>Python has very large community support & active forums to support the users</li>
+                <li>Presence of Third Party Modules makes Python language more stronger.</li>
+                <li>Extensive Support Libraries (ex: NumPy for numerical calculations, Pandas for data analytics etc) helps the user to solve big problems with ease.</li>
+                <li>Python is a general-purpose, high-level programming language. It is used to create programs for a wide variety of tasks, including web development, software development, and scientific and numerical computation.</li>
+                <li>Python is a widely used high-level, general-purpose, interpreted, dynamic programming language. Its design philosophy emphasizes code readability, and its syntax allows programmers to express concepts in fewer lines of code than possible in languages such as C++ or Java.</li>
+                <li>The popularity of Python is growing rapidly. Now it's one of the most popular programming languages. </li>
+            </p>
+            <br>
+            <h1>Features of this tool</h1>
+            <br>
+            <p>
+                <li>Simple & Minimalist Design, Lightweight, Easy & Fast.</li>
+                <li>Easy to use, Easy to learn, Easy to understand.</li>
+                <li>Supported Python version - 3.10.1</li>
+                <li>Interactive program execution which makes the user to give program inputs at real time</li>
+                <li>Helpful for beginners to learn and practice Python.</li>
+                <li>Users can upload program files and input files </li>
+                <li>Dark & Light theme options and customizable code editor with more themes</li>
+                <li>Code Editor with font-size customizable.</li>
+            </p>
+            <br>
+            <h1>About Developer</h1>
+            <div class="about-developer">
+                <h1>
+                    NANDA KUMAR K
+                </h1>
+                <h2>
+                    Web Developer
+                </h2>
+                <div class="developer-img">
+                    <img src="{{ url_for('static', filename = 'nandu.jpeg') }}" />
                 </div>
-            </div> 
-        </div>
+                <div class="profile-links">
+                    <div class="profile-icon">
+                        <a href="https://www.linkedin.com/in/nanda-kumar-k-9686b6215"><i class="fab fa-linkedin-in" style="font-size: 20px ;"></i></a>
+                    </div>
+                    <div class="profile-icon">
+                        <a href="https://github.com/N-and-U"><i class="fab fa-github"></i></a>
+                     </div>
+                    <div class="profile-icon">
+                        <a href="https://www.stopstalk.com/user/profile/nandakumark"><i class="fas fa-ban"></i></a>
+                    </div>
+                    <div class="profile-icon">
+                        <a href="mailto:nandakumar.k0531@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+
+            </div>
     </div>
-
-    <script>
-        var textareas = document.getElementsByTagName('textarea');
-        var count = textareas.length;
-        for(var i=0;i<count;i++){
-            textareas[i].onkeydown = function(e){
-                if(e.keyCode==9 || e.which==9){
-                    e.preventDefault();
-                    var s = this.selectionStart;
-                    this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
-                    this.selectionEnd = s+1; 
-                }
-            }
-        }
-        window.pressed = function(){
-            var a = document.getElementById('aa');
-            if(a.value == "")
-            {
-                fileLabel.innerHTML = "Choose file";
-            }
-            else
-            {
-                var theSplit = a.value.split('\\');
-                fileLabel.innerHTML = theSplit[theSplit.length-1];
-            }
-        };
-
-        function codeoptions(opt){
-            if (opt == "editer"){
-                document.getElementsByClassName("code-container")[0].style.display = "block";
-                document.getElementsByClassName("upload-code-file")[0].style.display = "none";
-            }
-            else if (opt == "upload"){
-                document.getElementsByClassName("code-container")[0].style.display = "none";
-                document.getElementsByClassName("upload-code-file")[0].style.display = "block";
-            }
-        }
-
-        function inputoption(opt){
-            if (opt == "upload"){
-                document.getElementsByClassName("upload-input-file")[0].style.display = "block";
-                document.getElementsByClassName("take-input")[0].style.display = "none";
-                document.getElementsByClassName("display-output")[0].style.display = "none";
-            }
-            else if (opt == "output"){
-                document.getElementsByClassName("upload-input-file")[0].style.display = "none";
-                document.getElementsByClassName("take-input")[0].style.display = "none";
-                document.getElementsByClassName("display-output")[0].style.display = "block";
-            }
-            else if (opt == "enterinput"){
-                document.getElementsByClassName("upload-input-file")[0].style.display = "none";
-                document.getElementsByClassName("take-input")[0].style.display = "block";
-                document.getElementsByClassName("display-output")[0].style.display = "none";
-            }
-        }
-
-        function submitcode(){
-            // document.getElementById("codefile").submit();
-            document.getElementById("codetext").submit();
-            // document.getElementById("inputfile").submit();
-            // document.getElementById("inputtext").submit();
-        }
-    </script>
-
+    <div class="footer">
+        <b><p>&copy;Copyright 2022. Nanda Kumar K</p></b>
+    </div>
+    <script src="{{ url_for('static', filename = 'index.js') }}" ></script>
 </body>
 </html>

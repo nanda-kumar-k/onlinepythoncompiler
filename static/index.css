@@ -16,10 +16,11 @@ body {
     background: #2f64ea;
     color: white;
     font-family: cursive;
+    
 }
 .navbar-container img{
-    width: 80px;
-    height: 40px;
+    width: 100px;
+    height: 80px;
 }
 .container {
     width: 70%;
@@ -53,7 +54,7 @@ body {
     display: block;
     position: 'relative';
     /* background: blue; */
-    z-index: 1;
+    /* z-index: 1; */
 }
 .code .upload-code-file {
     position: absolute;
@@ -83,7 +84,7 @@ body {
     tab-size: 4;
     overflow: auto;
     border: none;
-    /* resize: none; */
+    resize: none;
     outline: none;
 }
 .code-submit-container {
@@ -116,14 +117,14 @@ body {
     width: 100%;
     height: 32vh;
     display: block;
-    position: 'relative';
+    position: relative;
     /* background: pink; */
-    z-index: 1;
+    /* z-index: -1; */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
 .upload-input-file {
     position: absolute;
-    width: 70%;
+    width: 100%;
     height: 32vh;
     display: none;
     /* background-color: orange; */
@@ -133,7 +134,7 @@ body {
 }
 .take-input{
     position: absolute;
-    width: 70%;
+    width: 100%;
     height: 32vh;
     display: none;
     /* background-color: black; */
@@ -150,19 +151,20 @@ body {
     outline: none;
     overflow: auto;
     border: none;
-    /* resize: none; */
+    resize: none;
 }
 .display-output{
     position: absolute;
-    width: 68%;
+    width: 98%;
     height: 28vh;
     display: block;
     font-size: 20px;
     font-family: monospace;
     font-style: inherit;
     padding: 1%;
+    color: white;
     /* background-color: rgb(32, 31, 31); */
-    /* background-color: black; */
+    background-color: black;
     cursor: progress;
     /* background-color: rgb(184, 98, 98); */
 }
@@ -195,3 +197,499 @@ select {
     width: 50px;
     height: 20px;
 }
+.about-py {
+    margin-top: 50px;
+    width: 100%;
+    font-family: cursive;
+}
+.about-py p{
+    font-size: 18px;
+}
+.about-py li{
+    font-size: 18px;
+}
+.about-links {
+    width: 100%;
+    font-size: 18px;
+    margin-left: 50px;
+}
+.about-links li {
+    font-size: 18px;
+}
+.about-links li a{
+    text-decoration: none;
+    color: #2f64ea;
+}
+.about-developer {
+    width: 300px;
+    margin: 10px auto;
+    /* background-color: red; */
+    /* font-family: "Montserrat", sans-serif; */
+    font-size: 19px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #3e6372;
+    align-items: center;
+    text-align: center;
+}
+.about-developer h1{
+    font-size: 19px;
+}
+.about-developer h2 {
+    font-size: 16px;
+}
+.about-developer .developer-img {
+    margin-top: 20px;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 20px;
+}
+.about-developer .developer-img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+.about-developer .profile-links {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.about-developer .profile-links .profile-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 100%;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: #3e6372;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.about-developer .profile-links .profile-icon a{
+    text-decoration: none;
+    color: #3e6372;
+}
+.footer {
+    width: 100%;
+    height: 5vh;
+    text-align: center;
+    font-size: 20px;
+    font-family: monospace;
+    font-style: inherit;
+    /* color: #3e6372; */
+    /* background-color: #2f64ea; */
+}
+
+
+ 
+/* For Desktop View */
+@media screen and (min-width: 1024px) {
+    
+  }
+   
+  /* For Tablet View */
+  @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    
+  }
+   
+  /* For Mobile Portrait View */
+  @media screen and (max-device-width: 480px) and (orientation: portrait) {
+    .navbar-container {
+        width: 100%;
+        padding: 0;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 15px;
+        text-align: center;
+    }
+    .container {
+        width: 96%;
+        padding: 0 2%;
+        /* background-color: red; */
+    }
+    .code .upload-code-file {
+        width: 96%;
+    }
+    .code .code-container {
+        width: 94%;
+        height: 44vh;
+    }
+    .code .code-container textarea {
+        height: 44vh;
+    }
+    .output-container {
+        height: 34vh;
+    }
+    .output {
+        height: 34vh;
+    }
+    .upload-input-file {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input textarea {
+        height: 34vh;
+    }
+    .display-output {
+        width: 98%;
+        height: 32vh;
+    }
+    .about-py {
+        font-size: 14px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .about-py p{
+        font-size: 14px;
+    }
+    .about-py li{
+        font-size: 14px;
+    }
+    .about-links {
+        font-size: 14px;
+    }
+    .about-links li {
+        font-size: 14px;
+    }
+    .about-py h1{
+        font-size: 20px;
+    }
+
+  }
+   
+  /* For Mobile Landscape View */
+  @media screen and (max-device-width: 640px) and (orientation: landscape) {
+    .navbar-container {
+        width: 100%;
+        padding: 0;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 15px;
+        text-align: center;
+    }
+    .container {
+        width: 96%;
+        padding: 0 2%;
+        /* background-color: red; */
+    }
+    .code .upload-code-file {
+        width: 96%;
+    }
+    .code .code-container {
+        width: 94%;
+        height: 44vh;
+    }
+    .code .code-container textarea {
+        height: 44vh;
+    }
+    .output-container {
+        height: 34vh;
+    }
+    .output {
+        height: 34vh;
+    }
+    .upload-input-file {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input textarea {
+        height: 34vh;
+    }
+    .display-output {
+        width: 98%;
+        height: 32vh;
+    }
+    .about-py {
+        font-size: 14px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .about-py p{
+        font-size: 14px;
+    }
+    .about-py li{
+        font-size: 14px;
+    }
+    .about-links {
+        font-size: 14px;
+    }
+    .about-links li {
+        font-size: 14px;
+    }
+    .about-py h1{
+        font-size: 20px;
+    }
+  }
+   
+  /* For Mobile Phones Portrait or Landscape View */
+  @media screen and (max-device-width: 640px) {
+    .navbar-container {
+        width: 100%;
+        padding: 0;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 15px;
+        text-align: center;
+    }
+    .container {
+        width: 96%;
+        padding: 0 2%;
+        /* background-color: red; */
+    }
+    .code .upload-code-file {
+        width: 96%;
+    }
+    .code .code-container {
+        width: 94%;
+        height: 44vh;
+    }
+    .code .code-container textarea {
+        height: 44vh;
+    }
+    .output-container {
+        height: 34vh;
+    }
+    .output {
+        height: 34vh;
+    }
+    .upload-input-file {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input textarea {
+        height: 34vh;
+    }
+    .display-output {
+        width: 98%;
+        height: 32vh;
+    }
+    .about-py {
+        font-size: 14px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .about-py p{
+        font-size: 14px;
+    }
+    .about-py li{
+        font-size: 14px;
+    }
+    .about-links {
+        font-size: 14px;
+    }
+    .about-links li {
+        font-size: 14px;
+    }
+    .about-py h1{
+        font-size: 20px;
+    }
+  }
+   
+  /* For iPhone 4 Portrait or Landscape View */
+  @media screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+    .navbar-container {
+        width: 100%;
+        padding: 0;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 15px;
+        text-align: center;
+    }
+    .container {
+        width: 96%;
+        padding: 0 2%;
+        /* background-color: red; */
+    }
+    .code .upload-code-file {
+        width: 96%;
+    }
+    .code .code-container {
+        width: 94%;
+        height: 44vh;
+    }
+    .code .code-container textarea {
+        height: 44vh;
+    }
+    .output-container {
+        height: 34vh;
+    }
+    .output {
+        height: 34vh;
+    }
+    .upload-input-file {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input textarea {
+        height: 34vh;
+    }
+    .display-output {
+        width: 98%;
+        height: 32vh;
+    }
+    .about-py {
+        font-size: 14px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .about-py p{
+        font-size: 14px;
+    }
+    .about-py li{
+        font-size: 14px;
+    }
+    .about-links {
+        font-size: 14px;
+    }
+    .about-links li {
+        font-size: 14px;
+    }
+    .about-py h1{
+        font-size: 20px;
+    }
+  }
+   
+  /* For iPhone 5 Portrait or Landscape View */
+  @media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+    .navbar-container {
+        width: 100%;
+        padding: 0;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 15px;
+        text-align: center;
+    }
+    .container {
+        width: 96%;
+        padding: 0 2%;
+        /* background-color: red; */
+    }
+    .code .upload-code-file {
+        width: 96%;
+    }
+    .code .code-container {
+        width: 94%;
+        height: 44vh;
+    }
+    .code .code-container textarea {
+        height: 44vh;
+    }
+    .output-container {
+        height: 34vh;
+    }
+    .output {
+        height: 34vh;
+    }
+    .upload-input-file {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input textarea {
+        height: 34vh;
+    }
+    .display-output {
+        width: 98%;
+        height: 32vh;
+    }
+    .about-py {
+        font-size: 14px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .about-py p{
+        font-size: 14px;
+    }
+    .about-py li{
+        font-size: 14px;
+    }
+    .about-links {
+        font-size: 14px;
+    }
+    .about-links li {
+        font-size: 14px;
+    }
+    .about-py h1{
+        font-size: 20px;
+    }
+  }
+   
+  /* For iPhone 6 and 6 plus Portrait or Landscape View */
+  @media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3) {
+    .navbar-container {
+        width: 100%;
+        padding: 0;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 15px;
+        text-align: center;
+    }
+    .container {
+        width: 96%;
+        padding: 0 2%;
+        /* background-color: red; */
+    }
+    .code .upload-code-file {
+        width: 96%;
+    }
+    .code .code-container {
+        width: 94%;
+        height: 44vh;
+    }
+    .code .code-container textarea {
+        height: 44vh;
+    }
+    .output-container {
+        height: 34vh;
+    }
+    .output {
+        height: 34vh;
+    }
+    .upload-input-file {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input {
+        width: 100%;
+        height: 34vh;
+    }
+    .take-input textarea {
+        height: 34vh;
+    }
+    .display-output {
+        width: 98%;
+        height: 32vh;
+    }
+    .about-py {
+        font-size: 14px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .about-py p{
+        font-size: 14px;
+    }
+    .about-py li{
+        font-size: 14px;
+    }
+    .about-links {
+        font-size: 14px;
+    }
+    .about-links li {
+        font-size: 14px;
+    }
+    .about-py h1{
+        font-size: 20px;
+    }
+  }
